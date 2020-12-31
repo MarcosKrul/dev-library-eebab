@@ -1,3 +1,6 @@
 # dependencies
 /node_modules
+/src/assets/icons
+/src/assets/images
 .eslintcache
+.env
