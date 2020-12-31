@@ -24,7 +24,7 @@ module.exports = (req, res, next) => {
                 error: 'token invalid'
             })
             req.id = decoded.id
-            req.type = decoded.admin
+            req.type = decoded.type
             req.email = decoded.email
         return next()
     })

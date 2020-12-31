@@ -3,7 +3,7 @@ const knex = require('../database/index')
 module.exports = async (req, res, next) => {
     const { id, email, type } = req
 
-    if(type !== 145 || type !== 220) return res.status(401).send({
+    if(type !== 119 && type !== 79) return res.status(401).send({
         error: 'adm only'
     })
 
@@ -12,7 +12,7 @@ module.exports = async (req, res, next) => {
         email: email
     })
     
-    if(results.length === 0 || results[0].type !== 145 || results[0].type !== 220) 
+    if(results.length === 0 || (results[0].user_type !== 119 && results[0].user_type !== 79)) 
         return res.status(401).send({
             error: 'adm only'
         }) 
