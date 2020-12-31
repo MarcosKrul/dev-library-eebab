@@ -1,0 +1,205 @@
+@keyframes fade {
+    from {
+        opacity: 0;
+        transform: scale(0.9);
+        transform: translateY(10%);
+    } to {
+        opacity: 1;
+        transform: scale(1);
+        transform: translateY(0);
+    }
+}
+
+@keyframes rejectLoginAnimation {
+    0%, 100% {
+        transform: translateX(0);
+    } 35% {
+        transform: translateX(-10%);
+    } 70% {
+        transform: translateX(10%);
+    }
+}
+
+@keyframes randomCircles {
+    from {
+        opacity: 0;
+        transform: translateY(0);
+    } 50% {
+        opacity: 1;
+    } to {
+        transform: translateY(-1200px) rotate(960deg);
+    }
+}
+
+body {
+    overflow: hidden;
+}
+
+.container-image {
+    background: url('../../assets/images/login-fundo.jpg') no-repeat;
+    z-index: 0;
+    width: 100vw;
+    height: 100vh;
+    position: absolute;
+    background-size: cover;
+}
+
+.container-content {
+    z-index: 2;
+    height: 60%;
+    margin-top: 10%;
+    margin-bottom: 10%;
+    position: relative;
+    margin-left: 17.025%;
+    margin-right: 17.025%;
+    
+    animation-name: fade;
+    animation-duration: 900ms;
+    animation-timing-function: ease-out;
+}
+
+.container-content-left {
+    width: 50%;
+    height: 90%;
+    float: left;
+    transform: translateY(5%);
+    background-color: white;
+}
+
+.container-content-right {
+    width: 50%;
+    float: left;
+    height: 100%;
+}
+
+.left-content {
+    float: left;
+    padding: 3%;
+    height: 100%;
+    width: 90.99%;
+    color: #fff;
+    border-radius: 3%;
+    text-align: center;
+    align-items: center;
+    font: 700 40px Poppins;
+    justify-content: center;
+    background: linear-gradient(
+        0deg, 
+        rgba(141,0, 255,1) 0%, 
+        rgba(152,21,201,1) 16%, 
+        rgba(184,87, 38,1) 37%, 
+        rgba(217,107,97,1) 64%, 
+        rgba(228,156,29,1) 100%, 
+        rgba(249,190,87,1) 100%
+    );
+}
+
+.right-content {
+    float: left;
+    height: 90%;
+    width: 9.01%;
+    background-color:white;
+    transform: translateY(5%);
+}
+
+input {
+    border: none;
+    color: #000;
+    margin: 0 auto;
+    margin-top: 5%;
+    display: block;
+    width: 78.125%;
+    padding: 2% 2%;
+    border-radius: 3px;
+}
+
+input:focus {
+    outline-style: none;
+}
+
+button {
+    border: none;
+    margin-top: 8%;
+    width: 78.125%;
+    color: #A154B0;
+    border-radius: 3px;
+    font: 700 26px Poppins;
+    background-color: #fff;
+}
+
+button:hover {
+    cursor: pointer;
+    background-color: #eeedeb;
+}
+
+button:focus {
+    outline-style: none;
+}
+
+a {
+    display: flex;
+    color: #fff;
+    margin-top: 2%;
+    margin-left: 48%;
+    text-decoration: none;
+    font: 400 18px Poppins;
+}
+
+a:hover {
+    color: #eee9c5;
+    font-weight: 700;
+}
+
+.validate-error {
+    animation-duration: 400ms;
+    animation-name: rejectLoginAnimation;
+}
+
+.or-content {
+    margin-top: 3%;
+    margin-left: 17%;
+}
+
+hr {
+    width: 33%;
+    float: left;
+    margin-top: 8%;
+    border-color: #fff;
+    box-sizing: border-box;
+}
+
+P {
+    float: left;
+    margin-top: 4%;
+    font-size: 24px;
+    margin-left: 3%;
+    margin-right: 3%;
+}
+
+.top-content {
+    height: 50%;
+    display: flex;
+    text-align: center;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.bottom-content {
+    background: url('../../assets/images/login-escola.jpg') no-repeat;
+    height: 50%;
+    background-size: contain;
+    background-position: center;
+}
+
+.circles li {
+    z-index: 1;
+    width: 40px;
+    height: 40px;
+    bottom: -40px;
+    display: block;
+    border-radius: 50%;
+    position: absolute;
+    background-color: rgba(34, 235, 218, 0.199);
+    
+    animation: randomCircles 2s infinite alternate;
+}
