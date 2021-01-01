@@ -16,11 +16,26 @@ module.exports = {
         
         const { 
             name, 
-            type, 
             email, 
             avatar, 
             password, 
         } = req.body
+        
+        const { token } = req.params
+
+        const invite = await knex('invites').where('email', '=', email)
+        if(invite.length === 0) return res.status(401).send({
+            error: 'user has no invitation'
+        })
+
+        if(!token || invite[0].token != token) return res.status(401).send({
+            error: 'invalid token'
+        })
+
+        const now = new Date()
+        if(now > invite[0].expiresIn) return res.status(401).send({
+            error: 'token expired'
+        })
 
         if(!password) return res.status(400).send({
             error: 'password is null'
@@ -50,13 +65,15 @@ module.exports = {
             email: email,
             avatar: avatar,
             password: hash,
-            user_type: type,
+            user_type: invite[0].user_type,
             created_at: new Date(),
         }).catch((error) => {
             return res.status(400).send({
                 error: error.message
             })
         })
+
+        await knex('invites').where('email', '=', email).del()
 
         transporterConfig('welcome').sendMail({
             from: process.env.NODEMAILER_EMAIL,

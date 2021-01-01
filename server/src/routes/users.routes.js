@@ -2,6 +2,8 @@ const routes = require('express').Router()
 
 const userController = require('../controllers/userController')
 const authController = require('../controllers/authController')
+
+const inviteService = require('../services/invite') 
 const resetPasswordService = require('../services/resetPassword')
 
 const adminOnlyMiddleware = require('../middlewares/admOnly')
@@ -10,8 +12,9 @@ const managerOnlyMiddleware = require('../middlewares/managerOnly')
 
 
 routes.get('/users',                  authLoginMiddleware, adminOnlyMiddleware,   userController.index)
-routes.post('/users',                                                             userController.create)
+routes.post('/users/:token',                                                      userController.create)
 routes.delete('/users/:id',           authLoginMiddleware, managerOnlyMiddleware, userController.delete)
+routes.post('/users/invite',          authLoginMiddleware, managerOnlyMiddleware, inviteService.sendInvite)
 routes.post('/login',                                                             authController.authLogin)
 routes.patch('/users/name/update',    authLoginMiddleware,                        userController.nameUpdate)
 routes.patch('/users/avatar/update',  authLoginMiddleware,                        userController.avatarUpdate)
