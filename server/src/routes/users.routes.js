@@ -15,6 +15,7 @@ routes.delete('/users/:id',           authLoginMiddleware, managerOnlyMiddleware
 routes.post('/login',                                                             authController.authLogin)
 routes.patch('/users/name/update',    authLoginMiddleware,                        userController.nameUpdate)
 routes.patch('/users/avatar/update',  authLoginMiddleware,                        userController.avatarUpdate)
+routes.post('/login/google',                                                      authController.authLoginWithGoogle)
 routes.patch('/users/reset/password',                                             resetPasswordService.resetPassword)
 routes.patch('/users/forgot/password',                                            resetPasswordService.forgotPassword)
 
