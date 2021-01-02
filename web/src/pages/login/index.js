@@ -2,6 +2,9 @@ import React, { useEffect, useState } from 'react'
 import { useHistory } from 'react-router-dom'
 import GoogleLogin from 'react-google-login'
 
+import api from '../../services/api'
+import { login } from '../../services/auth'
+
 import './styles.css'
 
 const LoginPage = () => {
@@ -10,14 +13,43 @@ const LoginPage = () => {
 
     const [ email, setEmail ] = useState('')
     const [ password, setPassword ] = useState('')
-    
-    function handleAuthLogin() {
-        const inputEmail = document.querySelector('#email')
-        const inputPassword = document.querySelector('#password')
-        if(inputEmail.value === '' || inputPassword.value === '') return
+
+    function startFieldsAnimation(outerClass, classToAdd) {
+        document.querySelector('.'+outerClass).classList.add(classToAdd)
+        const formError = document.querySelector('.'+classToAdd)
+        if(formError) { 
+            formError.addEventListener('animationend', (event) => {
+                if(event.animationName === 'rejectLoginAnimation') 
+                    formError.classList.remove(classToAdd)
+            })        
+        } 
+    }
+
+    async function handleAuthLogin(e) {
+        e.preventDefault()
         
-        // connect with server
-        
+        if(
+            document.querySelector('#email').value    === '' || 
+            document.querySelector('#password').value === ''
+        ) {
+            startFieldsAnimation('input-block', 'validate-error')
+            return
+        }
+
+        try {
+            const response = await api.post('/login', {
+                emailToAuth: email,
+                passToAuth: password
+            })
+            login(response.data.token)
+            history.push('/main')
+        } catch(error){
+            switch(error.response.data.error){
+                case 'user not found': startFieldsAnimation('in-email-block', 'validate-email-error'); break
+                case 'invalid password': startFieldsAnimation('in-pass-block', 'validate-pass-error'); break
+                default: startFieldsAnimation('input-block', 'validate-error')
+            }
+        }            
     }
 
     function onSignIn(googleUser) {
@@ -56,23 +88,6 @@ const LoginPage = () => {
             ulCircles.appendChild(li)
         }
 
-        const inputBlock = document.querySelector('.input-block')
-        const btnLogin = document.querySelector('.btn-login')
-        btnLogin.addEventListener('click', (event) => {
-            event.preventDefault()
-                        
-            const fields = [...document.querySelectorAll('.left-content input')]
-            fields.forEach((field) => {
-                if(field.value === '') inputBlock.classList.add('validate-error')
-            })
-
-            const formError = document.querySelector('.validate-error')
-            if(formError) formError.addEventListener('animationend', (event) => {
-                if(event.animationName === 'rejectLoginAnimation') 
-                    formError.classList.remove('validate-error')
-            })
-        })
-
     }, [])
         
     return (
@@ -90,24 +105,28 @@ const LoginPage = () => {
                 <div className="container-content-right">
                     <div className="left-content">
                         Log in
-                        <form>
+                        <form onSubmit={handleAuthLogin}>
                             <div className="input-block">
-                                <input 
-                                    id="email" 
-                                    type="text" 
-                                    placeholder="E-mail" 
-                                    onChange={(e) => {setEmail(e.target.value)}}
+                                <div className="in-email-block">
+                                    <input 
+                                        id="email" 
+                                        type="text" 
+                                        placeholder="E-mail" 
+                                        onChange={(e) => {setEmail(e.target.value)}}
                                     />
-                                <input 
-                                    id="password" 
-                                    maxLength="45" 
-                                    type="password" 
-                                    placeholder="Senha" 
-                                    onChange={(e) => {setPassword(e.target.value)}}
-                                />
+                                </div>
+                                <div className="in-pass-block">
+                                    <input 
+                                        id="password" 
+                                        maxLength="45" 
+                                        type="password" 
+                                        placeholder="Senha" 
+                                        onChange={(e) => {setPassword(e.target.value)}}
+                                    />
+                                </div>
                             </div>
-                            <a href="http://localhost:3001/reset/password/page">Esqueceu sua senha?</a>
-                            <button class="btn-login" onClick={handleAuthLogin}>Enviar</button>
+                            <a href="http://localhost:3000/reset/password/page">Esqueceu sua senha?</a>
+                            <button className="btn-login" type="submit">Enviar</button>
                         </form>
                         <div className="or-content">
                             <hr /><p>ou</p><hr />

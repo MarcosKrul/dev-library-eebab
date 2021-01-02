@@ -155,6 +155,24 @@ a:hover {
     animation-name: rejectLoginAnimation;
 }
 
+.validate-email-error {
+    animation-duration: 400ms;
+    animation-name: rejectLoginAnimation;
+}
+
+.validate-email-error #email {
+    color: red;
+}
+
+.validate-pass-error {
+    animation-duration: 400ms;
+    animation-name: rejectLoginAnimation;
+}
+
+.validate-pass-error #password {
+    color: red;
+}
+
 .or-content {
     margin-top: 3%;
     margin-left: 17%;
