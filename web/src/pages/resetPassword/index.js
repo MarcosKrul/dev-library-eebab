@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 
+import api from '../../services/api'
 import startFieldsAnimation from '../../utils/start-animation' 
 import ResetPageComponent from '../../components/login-forgot-reset/index'
 
@@ -38,7 +39,11 @@ const ResetPasswordPage = () => {
 
         try {
 
-            // connect server
+            const token = 'token'
+            await api.patch(`/users/reset/password?token=${token}`, {
+                email: email,
+                newPassword: password
+            })
 
             const classMessage = document.querySelector('.message-user2')
             if(!classMessage){

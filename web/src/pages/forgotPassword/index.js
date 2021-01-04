@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 
+import api from '../../services/api'
 import startFieldsAnimation from '../../utils/start-animation' 
 import ForgotPageComponent from '../../components/login-forgot-reset/index'
 
@@ -8,6 +9,7 @@ import './styles.css'
 const ForgotPasswordPage = () => {
     
     const [ email, setEmail ] = useState('')
+    const [ sendEmail, setSendEmail ] = useState(false)
 
     async function handleForgotPassword(e) {
         e.preventDefault()
@@ -22,6 +24,10 @@ const ForgotPasswordPage = () => {
         }
 
         try {
+            if(!sendEmail) await api.patch('/users/forgot/password', {
+                email: email
+            })
+            setSendEmail(true)
                         
             const classMessage = document.querySelector('.message-user')
             if(!classMessage){
