@@ -5,6 +5,7 @@ import { isAuthenticated } from './services/auth'
 import MainPage from './pages/main/index'
 import LoginPage from './pages/login/index'
 import ResetPasswordPage from './pages/resetPassword/index'
+import ForgotPasswordPage from './pages/forgotPassword/index'
 
 
 const PrivateRoute = ({component: Component, ...rest}) => (
@@ -27,6 +28,7 @@ const Routes = () => {
             <Switch>
                 <Route path="/" exact component={LoginPage} />    
                 <PrivateRoute path="/main" component={MainPage} />
+                <Route path="/forgot/password/page" component={ForgotPasswordPage} />
                 <Route path="/reset/password/page" component={ResetPasswordPage} />
             </Switch>
         </BrowserRouter>
