@@ -18,6 +18,10 @@ module.exports = {
             error: 'user not found'
         })
 
+        if(result[0].password === null) return res.status(401).send({
+            error: 'google user'
+        })
+
         const expiresIn = new Date()
         expiresIn.setHours(expiresIn.getHours() + 1)
         const token = crypto.randomBytes(20).toString('hex')
