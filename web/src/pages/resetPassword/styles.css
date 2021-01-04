@@ -1,0 +1,24 @@
+@keyframes response-animation2 {
+    to {
+        transform: translateY(29%);
+    } from {
+        transform: translateY(0%);
+    }
+}
+
+.validate-sucess2 {
+    animation-name: response-animation2;
+    animation-duration: 1s;
+}
+
+.message-user2 {
+    display: flex;
+    flex: 1;
+    justify-content: center;
+    text-align: center;
+    padding-left: 10%;
+    margin-top: 10%;
+    padding-right: 10%;
+    font: 400 18px Poppins;
+    color: #fff;
+}
