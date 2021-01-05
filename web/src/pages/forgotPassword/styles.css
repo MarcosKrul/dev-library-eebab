@@ -1,13 +1,13 @@
-@keyframes response-animation {
-    to {
-        transform: translateY(110%);
-    } from {
+@keyframes responseAnimation {
+    from {
         transform: translateY(0);
+    } to {
+        transform: translateY(60%);
     }
 }
 
 .validate-sucess {
-    animation-name: response-animation;
+    animation-name: responseAnimation;
     animation-duration: 1s;
 }
 

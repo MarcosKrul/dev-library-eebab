@@ -1,15 +1,14 @@
 import React, { useState } from 'react'
 
 import api from '../../services/api'
-import startFieldsAnimation from '../../utils/start-animation' 
 import ForgotPageComponent from '../../components/login-forgot-reset/index'
+import { startFieldsAnimation, startFormAnimation } from '../../utils/start-animation' 
 
 import './styles.css'
 
 const ForgotPasswordPage = () => {
     
     const [ email, setEmail ] = useState('')
-    const [ sendEmail, setSendEmail ] = useState(false)
 
     async function handleForgotPassword(e) {
         e.preventDefault()
@@ -24,33 +23,22 @@ const ForgotPasswordPage = () => {
         }
 
         try {
-            if(!sendEmail) await api.patch('/users/forgot/password', {
+            
+            await api.patch('/users/forgot/password', {
                 email: email
             })
-            setSendEmail(true)
-                        
-            const classMessage = document.querySelector('.message-user')
-            if(!classMessage){
-                const message = document.createElement('div')
-                message.textContent = `Enviamos um email para "${email}" com as próximas instruções. Obrigado!`
-                message.classList.add('message-user')
-
-                startFieldsAnimation({
-                    outerClass: 'form-block',
-                    classToAdd: 'validate-sucess',
-                    animation: 'response-animation'
-                })
-                
-                const classValidate = document.querySelector('.validate-sucess')
-                classValidate.addEventListener('animationend', (event) => {
-                    if(event.animationName === 'response-animation')
-                        document.querySelector('form').prepend(message)
-                })
-            }
+            startFormAnimation(`Enviamos um email para "${email}" com as próximas instruções. Obrigado!`)
 
         } catch(error) {
-            alert('error')
-            console.log(error)
+            switch(error.response.data.error) {
+                case 'user not found': 
+                    startFormAnimation('Usuário não encontrado.')
+                    break
+                case 'google user':
+                    startFormAnimation('Não podemos alterar a senha de uma conta de outro domínio.')
+                    break
+                default: alert('ERROR')
+            }
         }
     }
 
@@ -67,7 +55,7 @@ const ForgotPasswordPage = () => {
                             type="text"
                             placeholder="E-mail"
                             onChange={(e) => {setEmail(e.target.value)}}
-                            />
+                        />
                     </div>
                     <button className="btn-forgot" type="submit">Enviar</button>
                 </form>

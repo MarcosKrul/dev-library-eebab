@@ -1,8 +1,8 @@
 import React, { useState } from 'react'
 
 import api from '../../services/api'
-import startFieldsAnimation from '../../utils/start-animation' 
 import ResetPageComponent from '../../components/login-forgot-reset/index'
+import { startFieldsAnimation, startFormAnimation } from '../../utils/start-animation' 
 
 import './styles.css'
 
@@ -44,29 +44,21 @@ const ResetPasswordPage = () => {
                 email: email,
                 newPassword: password
             })
-
-            const classMessage = document.querySelector('.message-user2')
-            if(!classMessage){
-                const message = document.createElement('div')
-                message.textContent = 'Senha alterada com sucesso!'
-                message.classList.add('message-user2')
-
-                startFieldsAnimation({
-                    outerClass: 'form-block',
-                    classToAdd: 'validate-sucess2',
-                    animation: 'response-animation2'
-                })
-                
-                const classValidate = document.querySelector('.validate-sucess2')
-                classValidate.addEventListener('animationend', (event) => {
-                    if(event.animationName === 'response-animation2')
-                        document.querySelector('form').prepend(message)
-                })
-            }
+            startFormAnimation('Senha alterada com sucesso!', '2')
             
         } catch(error) {
-            alert('error')
-            console.log(error)
+            switch(error.response.data.error){
+                case 'user not found':
+                    startFormAnimation('Usuário não encontrado.', '2')
+                    break
+                case 'request to reset_password not found':
+                    startFormAnimation('O usuário informado não possui requisição de redefinição.', '2')
+                    break
+                case 'invalid token': case 'token expired':
+                    startFormAnimation('A requisição para redefinição de senha é inválida. Por favor, tente novamente.', '2')
+                    break
+                default: alert('ERROR')
+            }
         }
     }
 
@@ -91,7 +83,7 @@ const ResetPasswordPage = () => {
                                 placeholder="Nova senha"
                                 maxLength={45}
                                 onChange={(e) => {setPassword(e.target.value)}}
-                                />
+                            />
                             <input 
                                 id="confirm-password"
                                 type="password"
