@@ -63,14 +63,16 @@ module.exports = {
         })
 
         const credentials = await knex('reset_password').where('user_id', '=', result[0].id)
-        if(credentials.length === 0) return res.status(500).send()
+        if(credentials.length === 0) return res.status(404).send({
+            error: 'request to reset_password not found'
+        })
         
         if(credentials[0].token !== token) return res.status(401).send({
             error: 'invalid token'
         })
 
         const now = new Date()
-        if(now > credentials[0].expiresIn) return res.status(401).send({
+        if(now > new Date(credentials[0].expiresIn)) return res.status(401).send({
             error: 'token expired'
         })
 
