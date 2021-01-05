@@ -33,7 +33,7 @@ module.exports = {
         })
 
         const now = new Date()
-        if(now > invite[0].expiresIn) return res.status(401).send({
+        if(now > new Date(invite[0].expiresIn)) return res.status(401).send({
             error: 'token expired'
         })
 
