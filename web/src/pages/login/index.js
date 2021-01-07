@@ -22,10 +22,7 @@ const LoginPage = () => {
     async function handleAuthLogin(e) {
         e.preventDefault()
         
-        if(
-            document.querySelector('#email').value    === '' || 
-            document.querySelector('#password').value === ''
-        ) {
+        if(email === '' || password === '') {
             startFieldsAnimation({
                 outerClass: 'input-block',
                 classToAdd: 'validate-error',

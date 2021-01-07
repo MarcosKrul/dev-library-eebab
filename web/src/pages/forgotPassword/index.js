@@ -13,7 +13,7 @@ const ForgotPasswordPage = () => {
     async function handleForgotPassword(e) {
         e.preventDefault()
 
-        if(document.querySelector('#email').value === '') {
+        if(email === '') {
             startFieldsAnimation({
                 outerClass: 'input-block',
                 classToAdd: 'validate-error',

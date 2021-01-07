@@ -15,11 +15,7 @@ const ResetPasswordPage = () => {
     async function handleResetPassword(e) {
         e.preventDefault()
 
-        if(
-            document.querySelector('#email').value === '' ||
-            document.querySelector('#password').value === '' ||
-            document.querySelector('#confirm-password').value === ''
-        ) {
+        if(email === '' || password === '' || confirmPass === '') {
             startFieldsAnimation({
                 outerClass: 'input-block',
                 classToAdd: 'validate-error',
