@@ -1,10 +1,23 @@
 import React from 'react'
+import { useAuth } from '../../contexts/AuthContext'
 
 const MainPage = () => {
+
+    const { user, signOut } = useAuth()
+
+    function handleSignOut() {
+        signOut()
+    }
+
     return(
-        <h1>
-            Bem vindo
-        </h1>
+        <div>
+            <h1>
+                Bem vindo, {user.name}
+            </h1>
+            <form onSubmit={handleSignOut}>
+                <button type="submit">Sair</button>
+            </form>
+        </div>
     )
 }
 

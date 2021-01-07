@@ -3,17 +3,18 @@ import { useHistory } from 'react-router-dom'
 import GoogleLogin from 'react-google-login'
 
 import api from '../../services/api'
-import { login } from '../../services/auth'
+import { useAuth } from '../../contexts/AuthContext'
 
+import { startFieldsAnimation } from '../../utils/start-animation' 
 import LoginPageComponent from '../../components/login-forgot-reset/index'
-
-import startFieldsAnimation from '../../utils/start-animation' 
 
 import './styles.css'
 
 const LoginPage = () => {
 
     const history = useHistory()
+
+    const { signIn } = useAuth()
 
     const [ email, setEmail ] = useState('')
     const [ password, setPassword ] = useState('')
@@ -34,11 +35,11 @@ const LoginPage = () => {
         }
 
         try {
-            const response = await api.post('/login', {
+            const { data } = await api.post('/login', {
                 emailToAuth: email,
                 passToAuth: password
             })
-            login(response.data.token)
+            signIn(data)
             history.push('/main')
         } catch(error){
             switch(error.response.data.error){
