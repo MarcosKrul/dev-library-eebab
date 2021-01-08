@@ -1,5 +1,7 @@
 const knex = require('../database/index')
 
+const calc = require('../utils/calculateTicket')
+
 module.exports = {
     async loan(req, res) {
         const { book_id, user_id } = req.body
@@ -30,7 +32,6 @@ module.exports = {
         })
         
         await knex('book_loan').insert({
-            ticket: 0,
             user_id: user_id,
             book_id: book_id,
             created_at: new Date()
@@ -68,7 +69,9 @@ module.exports = {
                 error: 'loan not found'
             })
 
-            if(Number(result[0].ticket) !== 0) return res.status(401).send({
+            const response = await calc(result[0].id)
+            console.log(response)
+            if(response > 0) return res.status(400).send({
                 error: 'user has pending tickets'
             })
 
