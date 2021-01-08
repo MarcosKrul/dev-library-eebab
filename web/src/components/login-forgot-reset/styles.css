@@ -1,63 +1,3 @@
-@keyframes fade {
-    from {
-        opacity: 0;
-        transform: scale(0.9);
-        transform: translateY(10%);
-    } to {
-        opacity: 1;
-        transform: scale(1);
-        transform: translateY(0);
-    }
-}
-
-@keyframes rejectLoginAnimation {
-    0%, 100% {
-        transform: translateX(0);
-    } 35% {
-        transform: translateX(-10%);
-    } 70% {
-        transform: translateX(10%);
-    }
-}
-
-@keyframes randomCircles {
-    from {
-        opacity: 0;
-        transform: translateY(0);
-    } 50% {
-        opacity: 1;
-    } to {
-        transform: translateY(-1200px) rotate(960deg);
-    }
-}
-
-body {
-    overflow: hidden;
-}
-
-.container-image {
-    background: url('../../assets/images/login-fundo.jpg') no-repeat;
-    z-index: 0;
-    width: 100vw;
-    height: 100vh;
-    position: absolute;
-    background-size: cover;
-}
-
-.container-content {
-    z-index: 2;
-    height: 60%;
-    margin-top: 10%;
-    margin-bottom: 10%;
-    position: relative;
-    margin-left: 17.025%;
-    margin-right: 17.025%;
-    
-    animation-name: fade;
-    animation-duration: 900ms;
-    animation-timing-function: ease-out;
-}
-
 .container-content-left {
     width: 50%;
     height: 90%;
@@ -102,63 +42,6 @@ body {
     transform: translateY(5%);
 }
 
-input {
-    border: none;
-    color: #000;
-    margin: 0 auto;
-    margin-top: 5%;
-    display: block;
-    width: 78.125%;
-    padding: 2% 2%;
-    border-radius: 3px;
-}
-
-input:focus {
-    outline-style: none;
-}
-
-button {
-    border: none;
-    margin-top: 8%;
-    width: 78.125%;
-    color: #A154B0;
-    border-radius: 3px;
-    font: 700 26px Poppins;
-    background-color: #fff;
-}
-
-button:hover {
-    cursor: pointer;
-    background-color: #eeedeb;
-}
-
-button:focus {
-    outline-style: none;
-}
-
-.validate-error {
-    animation-duration: 400ms;
-    animation-name: rejectLoginAnimation;
-}
-
-.validate-email-error {
-    animation-duration: 400ms;
-    animation-name: rejectLoginAnimation;
-}
-
-.validate-email-error #email {
-    color: red;
-}
-
-.validate-pass-error {
-    animation-duration: 400ms;
-    animation-name: rejectLoginAnimation;
-}
-
-.validate-pass-error #password {
-    color: red;
-}
-
 .top-content {
     height: 50%;
     display: flex;
@@ -172,17 +55,4 @@ button:focus {
     height: 50%;
     background-size: contain;
     background-position: center;
-}
-
-.circles li {
-    z-index: 1;
-    width: 40px;
-    height: 40px;
-    bottom: -40px;
-    display: block;
-    border-radius: 50%;
-    position: absolute;
-    background-color: rgba(34, 235, 218, 0.199);
-    
-    animation: randomCircles 2s infinite alternate;
 }

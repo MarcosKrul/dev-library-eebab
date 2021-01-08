@@ -2,9 +2,9 @@ a {
     display: flex;
     color: #fff;
     margin-top: 2%;
-    margin-left: 48%;
+    margin-left: 53%;
     text-decoration: none;
-    font: 400 18px Poppins;
+    font: 400 1.6rem Poppins;
 }
 
 a:hover {
@@ -27,8 +27,8 @@ hr {
 
 P {
     float: left;
-    margin-top: 4%;
-    font-size: 24px;
+    margin-top: 4.5%;
+    font-size: 1.7rem;
     margin-left: 3%;
     margin-right: 3%;
 }

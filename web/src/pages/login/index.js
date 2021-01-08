@@ -43,14 +43,14 @@ const LoginPage = () => {
                 case 'user not found': 
                     startFieldsAnimation({
                         outerClass: 'in-email-block',
-                        classToAdd: 'validate-email-error',
+                        classToAdd: 'validate-error',
                         animation: 'rejectLoginAnimation'
                     })
                     break
                 case 'invalid password': 
                     startFieldsAnimation({
                         outerClass: 'in-pass-block',
-                        classToAdd: 'validate-pass-error',
+                        classToAdd: 'validate-error',
                         animation: 'rejectLoginAnimation'
                     })
                     break
