@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { useParams } from 'react-router-dom'
 
 import api from '../../services/api'
 import ResetPageComponent from '../../components/login-forgot-reset/index'
@@ -7,6 +8,8 @@ import { startFieldsAnimation, startFormAnimation } from '../../utils/start-anim
 import './styles.css'
 
 const ResetPasswordPage = () => {
+
+    const { token } = useParams()
 
     const [ email, setEmail] = useState('')
     const [ password, setPassword ] = useState('')
@@ -35,7 +38,6 @@ const ResetPasswordPage = () => {
 
         try {
 
-            const token = 'token'
             await api.patch(`/users/reset/password?token=${token}`, {
                 email: email,
                 newPassword: password

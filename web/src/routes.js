@@ -29,7 +29,7 @@ const Routes = () => {
                 <Route path="/" exact component={LoginPage} />    
                 <PrivateRoute path="/main" component={MainPage} />
                 <Route path="/forgot/password/page" component={ForgotPasswordPage} />
-                <Route path="/reset/password/page" component={ResetPasswordPage} />
+                <Route path="/reset/password/page/:token" component={ResetPasswordPage} />
             </Switch>
         </BrowserRouter>
     )

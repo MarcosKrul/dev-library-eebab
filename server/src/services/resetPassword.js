@@ -39,7 +39,7 @@ module.exports = {
             template: 'index',
             context: {
                 name: (result[0].name).toUpperCase(),
-                link: `http://localhost:3333/reset?token=${token}`      // link provisorio
+                link: `http://localhost:3000/reset/password/page/${token}`
             }
         }).then(() => {
             return res.status(200).send()
