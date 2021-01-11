@@ -1,0 +1,54 @@
+@keyframes alter-to-google {
+    from {
+        transform: translateX(230%);
+    } to {
+        transform: translateX(0);
+    }
+}
+
+@keyframes visible-content-google {
+    0%, 90% {
+        opacity: 0;
+    } 100% {
+        opacity: 1;
+    }
+}
+
+.container-email {
+    width: 100%;
+    height: 100%;
+    background-color: white;
+}
+
+.left-container-email {
+    width: 30%;
+    float: left;
+    height: 100%;
+
+    animation: alter-to-google 1s both;
+}
+
+.left-container-email button {
+    width: 100%;
+    height: 100%;
+    margin-top: 0;
+    color: white;
+    background: linear-gradient(
+        0deg, 
+        rgba(141,0, 255,1) 0%, 
+        rgba(152,21,201,1) 16%, 
+        rgba(184,87, 38,1) 37%, 
+        rgba(217,107,97,1) 64%, 
+        rgba(228,156,29,1) 100%, 
+        rgba(249,190,87,1) 100%
+    );
+}
+
+.right-container-email {
+    width: 70%;
+    float: left;
+    height: 100%;
+
+    animation: visible-content-google 1s;
+}
+
