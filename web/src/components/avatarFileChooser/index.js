@@ -1,6 +1,7 @@
 import React, { useState, useMemo } from 'react'
 import { useDropzone } from 'react-dropzone'
 import filesize from 'filesize'
+import api from '../../services/api'
 
 import { CircularProgressbar } from 'react-circular-progressbar'
 import { MdCheckCircle, MdError } from 'react-icons/md'
@@ -49,7 +50,7 @@ const AvatarFileChooser = ({avatar, setAvatar}) => {
         readableSize: filesize(22260)
     })
 
-    function handleUpload(files) {
+    async function handleUpload(files) {
         const uploadedFile = files.map((file) => ({
             file,
             url: null,
@@ -63,6 +64,28 @@ const AvatarFileChooser = ({avatar, setAvatar}) => {
         
         setUploadedFile(uploadedFile[0])
         
+        try {
+
+            const data = new FormData()
+            data.append('file', uploadedFile[0].file)
+            const response = await api.post('/files/upload', data, {
+                onUploadProgress: (progressEvent) => {
+                    const { loaded, total} = progressEvent
+                    uploadedFile[0].progress = parseInt(Math.round((loaded * 100) / total))
+                    setUploadedFile(uploadedFile[0])
+                }
+            })
+
+            uploadedFile[0].uploaded = true
+            uploadedFile[0].url = response.data.url
+            setUploadedFile(uploadedFile[0])
+            setAvatar(uploadedFile[0].url)
+            
+        } catch(error) {
+            setAvatar('')
+            uploadedFile[0].error = true
+            setUploadedFile(uploadedFile[0])
+        }
     }
 
     return (
