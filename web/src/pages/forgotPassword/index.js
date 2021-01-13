@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
-
 import api from '../../services/api'
+
+import Button from '../../components/buttonWithLoadingAnimation/index'
 import ForgotPageComponent from '../../components/login-forgot-reset/index'
 import { startFieldsAnimation, startFormAnimation } from '../../utils/start-animation' 
 
@@ -9,6 +10,7 @@ import './styles.css'
 const ForgotPasswordPage = () => {
     
     const [ email, setEmail ] = useState('')
+    const [ loading, setLoading ] = useState(false)
 
     async function handleForgotPassword(e) {
         e.preventDefault()
@@ -24,9 +26,11 @@ const ForgotPasswordPage = () => {
 
         try {
             
+            setLoading(true)
             await api.patch('/users/forgot/password', {
                 email: email
             })
+            setLoading(false)
             startFormAnimation(`Enviamos um email para "${email}" com as próximas instruções. Obrigado!`)
 
         } catch(error) {
@@ -39,6 +43,7 @@ const ForgotPasswordPage = () => {
                     break
                 default: alert('ERROR')
             }
+            setLoading(false)
         }
     }
 
@@ -57,7 +62,7 @@ const ForgotPasswordPage = () => {
                             onChange={(e) => {setEmail(e.target.value)}}
                         />
                     </div>
-                    <button className="btn-forgot" type="submit">Enviar</button>
+                    <Button className="btn-forgot" type="submit" activeLoading={loading}/>
                 </form>
             </div>
         </ForgotPageComponent>

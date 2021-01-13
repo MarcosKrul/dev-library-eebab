@@ -1,7 +1,8 @@
 import React, { useState } from 'react'
 import { useParams } from 'react-router-dom'
-
 import api from '../../services/api'
+
+import Button from '../../components/buttonWithLoadingAnimation/index'
 import ResetPageComponent from '../../components/login-forgot-reset/index'
 import { startFieldsAnimation, startFormAnimation } from '../../utils/start-animation' 
 
@@ -13,6 +14,7 @@ const ResetPasswordPage = () => {
 
     const [ email, setEmail] = useState('')
     const [ password, setPassword ] = useState('')
+    const [ loading, setLoading ] = useState(false)
     const [ confirmPass, setConfirmPass ] = useState('')
 
     async function handleResetPassword(e) {
@@ -38,10 +40,12 @@ const ResetPasswordPage = () => {
 
         try {
 
+            setLoading(true)
             await api.patch(`/users/reset/password?token=${token}`, {
                 email: email,
                 newPassword: password
             })
+            setLoading(false)
             startFormAnimation('Senha alterada com sucesso!', '2')
             
         } catch(error) {
@@ -57,6 +61,7 @@ const ResetPasswordPage = () => {
                     break
                 default: alert('ERROR')
             }
+            setLoading(false)
         }
     }
 
@@ -91,7 +96,7 @@ const ResetPasswordPage = () => {
                             />
                         </div>
                     </div>
-                    <button className="btn-reset" type="submit">Enviar</button>
+                    <Button className="btn-reset" type="submit" activeLoading={loading}/>
                 </form>
             </div>
         </ResetPageComponent>

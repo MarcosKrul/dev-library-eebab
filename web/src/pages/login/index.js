@@ -6,6 +6,7 @@ import api from '../../services/api'
 import { useAuth } from '../../contexts/AuthContext'
 
 import { startFieldsAnimation } from '../../utils/start-animation' 
+import Button from '../../components/buttonWithLoadingAnimation/index'
 import LoginPageComponent from '../../components/login-forgot-reset/index'
 
 import './styles.css'
@@ -18,6 +19,7 @@ const LoginPage = () => {
 
     const [ email, setEmail ] = useState('')
     const [ password, setPassword ] = useState('')
+    const [ loading, setLoading ] = useState(false)
 
     async function handleAuthLogin(e) {
         e.preventDefault()
@@ -32,11 +34,13 @@ const LoginPage = () => {
         }
 
         try {
+            setLoading(true)
             const { data } = await api.post('/login', {
                 emailToAuth: email,
                 passToAuth: password
             })
             signIn(data)
+            setLoading(false)
             history.push('/main')
         } catch(error){
             switch(error.response.data.error){
@@ -61,6 +65,7 @@ const LoginPage = () => {
                         animation: 'rejectLoginAnimation'
                     })
             }
+            setLoading(false)
         }            
     }
 
@@ -98,7 +103,7 @@ const LoginPage = () => {
                     </div>
                 </div>
                 <a href="http://localhost:3000/forgot/password/page">Esqueceu sua senha?</a>
-                <button className="btn-login" type="submit">Enviar</button>
+                <Button className="btn-login" type="submit" activeLoading={loading}/>
             </form>
             <div className="or-content">
                 <hr /><p>ou</p><hr />
