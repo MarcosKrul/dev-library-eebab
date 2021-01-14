@@ -11,7 +11,7 @@
 
 .container-register-email button {
     width: 70%;
-    margin-top: 4%;
+    margin-top: 6%;
     margin-left: 15%;
     color: white;
     background: linear-gradient(
@@ -22,6 +22,10 @@
         rgba(217,107,97,1) 64%, 
         rgba(228,156,29,1) 100%, 
         rgba(249,190,87,1) 100%);
+}
+
+.user-message {
+    margin-top: 3%;
 }
 
 .container-register-email input {
