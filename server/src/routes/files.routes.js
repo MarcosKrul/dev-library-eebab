@@ -4,7 +4,7 @@ const multerConfig   = require('../config/multer')
 const fileController = require('../controllers/fileController')
 
 routes.get('/files/list', fileController.getListFiles)
-routes.get(
+routes.post(
     '/files/upload',
     multer(multerConfig).single('file'),
     fileController.uploadFile
