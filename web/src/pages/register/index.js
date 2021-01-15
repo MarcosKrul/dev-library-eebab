@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import { useParams, useHistory } from 'react-router-dom'
+import GoogleLogin from 'react-google-login'
 import api from '../../services/api'
 
 import { startFieldsAnimation } from '../../utils/start-animation.js'
@@ -9,6 +10,8 @@ import RegisterWithGoogleComponent from '../../components/registerWithGoogleAcc/
 import AvatarChooserComponent from '../../components/avatarFileChooser/index'
 
 import './styles.css'
+
+require('dotenv/config')
 
 const RegisterPage = () => {
     
@@ -25,6 +28,29 @@ const RegisterPage = () => {
     const [ registerWithEmail, setRegisterWithEmail ] = useState(true)
     const [ avatar, setAvatar ] = useState('http://localhost:3333/files/cb78c6153c2a1e3d9be89b08eccd28ff-avatar-default.png')
         
+    function handleError(err) {
+        switch(err) {
+            case 'user already exists':
+                setUserMessage('O usuário já possui cadastro no sistema.')
+                break
+            case 'user has no invitation':
+                setUserMessage('O usuário não possui um convite para cadastro.')
+                break
+            case 'invalid token': 
+            case 'token expired':
+                setUserMessage('O convite para cadastro é inválido.')
+                break
+            case 'password is null':
+            case 'email is not valid':
+            case 'name exceed 45 char':
+            case 'email exceed 45 char':
+            case 'password exceed 45 char':
+                setUserMessage('Existe algum erro nas credenciais informadas.')
+                break
+            default: alert('ERROR')
+        }
+    }
+
     async function handleRegister(e) {
         e.preventDefault()
 
@@ -56,27 +82,25 @@ const RegisterPage = () => {
             })
             setLoading(false)
             history.push('/')
-        } catch(error) {
-            switch(error.response.data.error) {
-                case 'user has no invitation':
-                    setUserMessage('O usuário não possui um convite para cadastro.')
-                    break
-                case 'invalid token': 
-                case 'token expired':
-                    setUserMessage('O convite para cadastro é inválido.')
-                    break
-                case 'password is null':
-                case 'email is not valid':
-                case 'name exceed 45 char':
-                case 'email exceed 45 char':
-                case 'password exceed 45 char':
-                    setUserMessage('Existe algum erro nas credenciais informadas.')
-                    break
-                default: alert('ERROR')
-            }
+        } catch(error) { 
             setLoading(false)
+            handleError(error.response.data.error) 
         }
     } 
+    
+    async function handleRegisterGoogleAcc(googleUser) {    
+        try {
+            const profile = googleUser.getBasicProfile()
+            await api.post(`/users/${token}`, {
+                password: '',
+                googleAcc: true,
+                name: profile.getName(),
+                email: profile.getEmail(),
+                avatar: profile.getImageUrl() 
+            })
+            history.push('/')            
+        } catch(error) { handleError(error.response.data.error) }
+    }
 
     return (
         <RegisterPageComponent>
@@ -139,7 +163,20 @@ const RegisterPage = () => {
                     </RegisterWithEmailComponent> 
                     :
                     <RegisterWithGoogleComponent setState={() => {setRegisterWithEmail(!registerWithEmail)}}>
-                        <h1>Cadastro com conta do Google</h1>
+                        <div className="container-register-googleacc">
+                            <GoogleLogin
+                                theme={'dark'}
+                                isSignedIn={false}
+                                onSuccess={handleRegisterGoogleAcc}
+                                cookiePolicy={'single_host_origin'}
+                                buttonText="Faça cadastro com conta Google"
+                                onFailure={console.log('error login with google')}
+                                clientId={process.env.REACT_APP_GOOGLE_CLIENT_ID}
+                            />
+                        </div>
+                        <h3>
+                            {userMessage}
+                        </h3>
                     </RegisterWithGoogleComponent>
                 }
             </div>

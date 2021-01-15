@@ -61,3 +61,18 @@
 .avatar-choice-container-re h2 {
     margin-left: -10%;
 }
+
+.container-register-googleacc {
+    width: 100%;
+    height: 65%;
+    display: flex;
+    padding-top: 15%;
+    align-items: center;
+    justify-content: center;
+}
+
+h3 {
+    margin-top: 0;
+    text-align: center;
+    font: 400 1.8rem Poppins;
+}

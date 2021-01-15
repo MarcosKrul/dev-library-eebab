@@ -11,6 +11,8 @@ import LoginPageComponent from '../../components/login-forgot-reset/index'
 
 import './styles.css'
 
+require('dotenv/config')
+
 const LoginPage = () => {
 
     const history = useHistory()
@@ -20,6 +22,7 @@ const LoginPage = () => {
     const [ email, setEmail ] = useState('')
     const [ password, setPassword ] = useState('')
     const [ loading, setLoading ] = useState(false)
+    const [ userMessage, setUserMessage ] = useState('')
 
     async function handleAuthLogin(e) {
         e.preventDefault()
@@ -69,12 +72,25 @@ const LoginPage = () => {
         }            
     }
 
-    function onSignIn(googleUser) {
-        var profile = googleUser.getBasicProfile()
-        console.log('Name: ' + profile.getName())
-        console.log('Image URL: ' + profile.getImageUrl())
-        console.log('Email: ' + profile.getEmail())
-        console.log('Token: ' + googleUser.getAuthResponse().id_token)
+    async function onSignIn(googleUser) {
+        try {
+            const { data } = await api.post('/login/google', {
+                token: googleUser.getAuthResponse().id_token
+            })
+            signIn(data)
+            history.push('/main')
+        } catch (error) {
+            switch(error.response.data.error) {
+                case 'user not found':
+                    setUserMessage('O usuário não possui cadastro no sistema.')
+                    break 
+                case 'token is null':
+                case 'token is not valid':
+                    setUserMessage('Ocorreu um erro com a validação da sua conta Google.')
+                    break
+                default: alert('ERROR')
+            }
+        }
     }
             
     return (
@@ -109,16 +125,16 @@ const LoginPage = () => {
                 <hr /><p>ou</p><hr />
             </div>
             <GoogleLogin
-                isSignedIn={true}
+                isSignedIn={false}
                 onSuccess={onSignIn}
                 onFailure={console.log('error login with google')}
                 cookiePolicy={'single_host_origin'}
                 buttonText="Faça login com o google"
-                clientId="1038099324845-rkju37roc4fm8r5q3qj9nd6gu8egqcvo.apps.googleusercontent.com"
-                // render={(renderProps) => (
-                //     <button>Log in com o google</button>
-                // )}
+                clientId={process.env.REACT_APP_GOOGLE_CLIENT_ID}
             />
+            <h3>
+                {userMessage}
+            </h3>
         </LoginPageComponent>
     )
 }

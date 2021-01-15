@@ -32,3 +32,8 @@ P {
     margin-left: 3%;
     margin-right: 3%;
 }
+
+h3 {
+    margin-top: 2%;
+    font: 400 1.5rem Poppins;
+}
