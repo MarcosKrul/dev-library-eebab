@@ -84,7 +84,6 @@ module.exports = {
             const user = response.data
             knex('users')
                 .where('email', '=', user.email)
-                .where('name', '=', user.name)
                 .whereNull('password')
                 .then((resp) => {
                     if(resp.length === 0) 
@@ -92,6 +91,7 @@ module.exports = {
                             error: 'user not found'
                         })
                     return res.status(200).send({
+                        user: resp[0],
                         token: generateToken(resp[0])
                     }) 
                 })

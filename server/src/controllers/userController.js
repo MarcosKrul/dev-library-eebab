@@ -19,9 +19,15 @@ module.exports = {
             email, 
             avatar, 
             password, 
+            googleAcc=false, 
         } = req.body
         
         const { token } = req.params
+
+        const result = knex('users').where('email', '=', email)
+        if((await result).length !== 0) return res.status(400).send({
+            error: 'user already exists'
+        })
 
         const invite = await knex('invites').where('email', '=', email)
         if(invite.length === 0) return res.status(401).send({
@@ -37,7 +43,7 @@ module.exports = {
             error: 'token expired'
         })
 
-        if(!password) return res.status(400).send({
+        if(!googleAcc && !password) return res.status(400).send({
             error: 'password is null'
         })
         if(password.length > 45) return res.status(400).send({
@@ -53,18 +59,13 @@ module.exports = {
             error: 'name exceed 45 char'
         })
 
-        const result = knex('users').where('email', '=', email)
-        if((await result).length !== 0) return res.status(400).send({
-            error: 'user already exists'
-        })
-
         const salt = bcrypt.genSaltSync(10)
         const hash = bcrypt.hashSync(password, salt)
         await knex('users').insert({
             name: name,
             email: email,
             avatar: avatar,
-            password: hash,
+            password: googleAcc? null : hash,
             user_type: invite[0].user_type,
             created_at: new Date(),
         }).catch((error) => {
