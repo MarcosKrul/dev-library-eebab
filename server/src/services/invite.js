@@ -5,7 +5,7 @@ require('dotenv/config')
 
 module.exports = {
     async sendInvite(req, res) {
-        const { email, type } = req.body
+        const { name, email, type } = req.body
 
         if(!email || !type) return res.status(400).send({
             error: 'some arguments are null'
@@ -37,7 +37,8 @@ module.exports = {
             subject: 'Convite para cadastro',
             template: 'index',
             context: {
-                link: `http://localhost:3333/users/invite/${token}`      // link provisorio
+                name: name? name.toUpperCase() : "CONVIDADO(a)",
+                link: `http://localhost:3000/register/page/${token}`
             }
         }).then(() => {
             return res.status(200).send()
