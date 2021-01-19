@@ -2,38 +2,37 @@ a {
     display: flex;
     color: #fff;
     margin-top: 2%;
-    margin-left: 53%;
+    margin-left: 11%;
     text-decoration: none;
     font: 400 1.6rem Poppins;
 }
 
 a:hover {
-    color: #9b3ee7;
-    font-weight: 700;
+    color: #ccc;
 }
 
 .or-content {
-    margin-top: 3%;
+    height: 10%;
     margin-left: 17%;
+}
+
+.container-google-auth h3 {
+    font: 400 1.5rem Poppins;
+    margin-bottom: -10%;
 }
 
 hr {
     width: 33%;
     float: left;
-    margin-top: 8%;
+    margin-top: 7%;
     border-color: #fff;
     box-sizing: border-box;
 }
 
 P {
     float: left;
-    margin-top: 4.5%;
+    margin-top: 4%;
     font-size: 1.7rem;
     margin-left: 3%;
     margin-right: 3%;
-}
-
-h3 {
-    margin-top: 2%;
-    font: 400 1.5rem Poppins;
 }

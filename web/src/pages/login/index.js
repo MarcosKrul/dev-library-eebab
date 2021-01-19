@@ -124,17 +124,19 @@ const LoginPage = () => {
             <div className="or-content">
                 <hr /><p>ou</p><hr />
             </div>
-            <GoogleLogin
-                isSignedIn={false}
-                onSuccess={onSignIn}
-                onFailure={console.log('error login with google')}
-                cookiePolicy={'single_host_origin'}
-                buttonText="Faça login com o google"
-                clientId={process.env.REACT_APP_GOOGLE_CLIENT_ID}
-            />
-            <h3>
-                {userMessage}
-            </h3>
+            <div className="container-google-auth">
+                <h3>
+                    {userMessage}
+                </h3>
+                <GoogleLogin
+                    isSignedIn={false}
+                    onSuccess={onSignIn}
+                    onFailure={console.log('error login with google')}
+                    cookiePolicy={'single_host_origin'}
+                    buttonText="Faça login com o google"
+                    clientId={process.env.REACT_APP_GOOGLE_CLIENT_ID}
+                />
+            </div>
         </LoginPageComponent>
     )
 }

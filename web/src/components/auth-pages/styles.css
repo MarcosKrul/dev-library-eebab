@@ -27,7 +27,7 @@
     } 50% {
         opacity: 1;
     } to {
-        transform: translateY(-1200px) rotate(960deg);
+        transform: translateY(-1200px);
     }
 }
 
@@ -48,6 +48,7 @@ body {
     z-index: 2;
     height: 60%;
     margin-top: 10%;
+    overflow: hidden;
     margin-bottom: 10%;
     position: relative;
     margin-left: 17.025%;
@@ -62,8 +63,7 @@ input {
     border: none;
     color: #000;
     margin: 0 auto;
-    margin-top: 5%;
-    display: block;
+    margin-top: 3%;
     width: 78.125%;
     padding: 2% 2%;
     border-radius: 3px;

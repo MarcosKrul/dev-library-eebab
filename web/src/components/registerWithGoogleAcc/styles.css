@@ -6,6 +6,14 @@
     }
 }
 
+@keyframes alter-to-email-2 {
+    from {
+        transform: translateY(-100%);
+    } to {
+        transform: translateY(0);
+    }
+}
+
 @keyframes visible-content-email {
     0%, 90% {
         opacity: 0;
@@ -15,7 +23,7 @@
 }
 
 .container-google {
-    width: 100%;
+    width: 200%;
     height: 100%;
     background-color: white;
 }
@@ -50,5 +58,28 @@
     height: 100%;
 
     animation: alter-to-email 1s both;
+}
+
+@media (max-width: 768px) {
+
+    .container-google {
+        width: 100%;
+        display: grid;
+        grid-template-rows: 1fr 2fr;
+        grid-template-columns: 1fr;
+    }
+    
+    .left-container-google {
+        width: 100%;
+        grid-row: 1/2;
+
+    }
+    
+    .right-container-google {
+        width: 100%;
+        grid-row: 2/3;
+        animation: alter-to-email-2 1s;
+    }
+
 }
 

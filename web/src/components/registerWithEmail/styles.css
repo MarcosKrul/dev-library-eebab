@@ -6,6 +6,14 @@
     }
 }
 
+@keyframes alter-to-google-2 {
+    from {
+        transform: translateY(200%);
+    } to {
+        transform: translateY(0);
+    }
+}
+
 @keyframes visible-content-google {
     0%, 90% {
         opacity: 0;
@@ -15,7 +23,7 @@
 }
 
 .container-email {
-    width: 100%;
+    width: 200%;
     height: 100%;
     background-color: white;
 }
@@ -52,3 +60,25 @@
     animation: visible-content-google 1s;
 }
 
+@media (max-width: 768px) {
+
+    .container-email {
+        width: 100%;
+        display: grid;
+        grid-template-rows: 1fr 2fr;
+        grid-template-columns: 1fr;
+    }
+    
+    .left-container-email {
+        width: 100%;
+        grid-row: 1/2;
+
+        animation: alter-to-google-2 1s;
+    }
+
+    .right-container-email {
+        width: 100%;
+        grid-row: 2/3;
+    }
+
+}

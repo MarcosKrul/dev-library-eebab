@@ -174,9 +174,7 @@ const RegisterPage = () => {
                                 clientId={process.env.REACT_APP_GOOGLE_CLIENT_ID}
                             />
                         </div>
-                        <h3>
-                            {userMessage}
-                        </h3>
+                        <h3>{userMessage}</h3>
                     </RegisterWithGoogleComponent>
                 }
             </div>

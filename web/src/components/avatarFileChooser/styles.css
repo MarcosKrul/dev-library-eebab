@@ -80,3 +80,9 @@
     flex-direction: line;
     justify-content: right;
 }
+
+@media (max-width: 768px) {
+    .drop-container p {
+        font-size: 1rem;
+    }
+}

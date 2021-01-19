@@ -19,8 +19,8 @@ html, body, #root {
 }
 
 body, input, button, textarea {
-    font: 500 1.6rem Poppins;
-    color: var(--color-text-base);
+    color: black;
+    font: 500 1.5rem Poppins;
 }
 
 @media (min-width: 700px) {

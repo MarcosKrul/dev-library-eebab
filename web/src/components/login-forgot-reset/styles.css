@@ -1,23 +1,31 @@
+.container-content {
+    display: grid;
+    grid-template-rows: 1fr;
+    grid-template-columns: 1fr 1fr;
+}
+
 .container-content-left {
-    width: 50%;
     height: 90%;
-    float: left;
-    transform: translateY(5%);
+    display: grid;
+    overflow: hidden;
+    align-self: center;
     background-color: white;
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr 1fr;
 }
 
 .container-content-right {
-    width: 50%;
-    float: left;
     height: 100%;
+    display: grid;
+    overflow: hidden;
+    grid-template-rows: 1fr;
+    grid-template-columns: 15fr 1fr;
 }
 
 .left-content {
-    float: left;
-    padding: 3%;
     height: 100%;
-    width: 90.99%;
     color: #fff;
+    overflow: hidden;
     border-radius: 3%;
     text-align: center;
     align-items: center;
@@ -35,24 +43,45 @@
 }
 
 .right-content {
-    float: left;
     height: 90%;
-    width: 9.01%;
+    align-self: center;
     background-color:white;
-    transform: translateY(5%);
 }
 
 .top-content {
-    height: 50%;
-    display: flex;
+    height: 100%;
+    padding-left: 1%;
+    padding-right: 1%;
     text-align: center;
-    flex-direction: column;
-    justify-content: center;
 }
 
 .bottom-content {
     background: url('../../assets/images/login-escola.jpg') no-repeat;
-    height: 50%;
+    height: 100%;
     background-size: contain;
     background-position: center;
+}
+
+@media (max-width: 768px) {
+
+    .container-content {
+        height: 90%;
+        margin-left: 15%;
+        margin-right: 15%;
+        font: 400 1.3rem Poppins;
+        grid-template-rows: 1fr 2fr;
+        grid-template-columns: 1fr;
+    }
+
+    .right-content, .container-content-left {
+        width: 95%;
+        height: 100%;
+        margin-left: 2.5%;
+    }
+
+    .container-content-right {
+        grid-template-rows: 15fr 1fr;
+        grid-template-columns: 1fr;
+    }
+    
 }
