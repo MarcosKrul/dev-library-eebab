@@ -29,7 +29,6 @@ const ResetPasswordPage = () => {
             return
         }
         if(password !== confirmPass) {
-            console.log(password, confirmPass)
             startFieldsAnimation({
                 outerClass: 'in-pass-block',
                 classToAdd: 'validate-error',

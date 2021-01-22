@@ -70,7 +70,7 @@ const AvatarFileChooser = ({avatar, setAvatar}) => {
             data.append('file', uploadedFile[0].file)
             const response = await api.post('/files/upload', data, {
                 onUploadProgress: (progressEvent) => {
-                    const { loaded, total} = progressEvent
+                    const { loaded, total } = progressEvent
                     uploadedFile[0].progress = parseInt(Math.round((loaded * 100) / total))
                     setUploadedFile(uploadedFile[0])
                 }
